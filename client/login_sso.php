@@ -6,6 +6,7 @@
  * Point clients here (/client/login_sso.php) instead of the unified /login.php
  * when they should all authenticate through the OpenID Connect provider.
  * Failed SSO attempts started from this page come back here too.
+ * A small "Sign in with password" link leads to /login.php for contacts not yet moved to SSO.
  */
 
 header("Content-Security-Policy: default-src 'self'");
@@ -99,6 +100,10 @@ $sso_available = $config_client_portal_enable == 1 && oidcIsConfigured($oidc_set
             <?php } else { ?>
                 <div class="alert alert-secondary mb-0">Single sign-on is not currently available. Please contact support.</div>
             <?php } ?>
+
+            <div class="text-center mt-3">
+                <a href="/login.php" class="small text-secondary">Sign in with password</a>
+            </div>
 
         </div>
     </div>
