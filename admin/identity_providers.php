@@ -3,6 +3,7 @@ require_once "includes/inc_all_admin.php";
 
 $oidc_settings = oidcGetSettings();
 $oidc_redirect_uri = "https://$config_base_url/client/login_oidc.php";
+$oidc_sso_login_url = "https://$config_base_url/client/login_sso.php";
  ?>
 
 <div class="card card-dark">
@@ -71,6 +72,15 @@ $oidc_redirect_uri = "https://$config_base_url/client/login_oidc.php";
                     <span class="input-group-text"><i class="fa fa-fw fa-link"></i></span>
                     <input type="text" class="form-control" value="<?= escapeHtml($oidc_redirect_uri) ?>" readonly>
                     <button type="button" class="btn btn-default clipboardjs" data-clipboard-text="<?= escapeHtml($oidc_redirect_uri) ?>"><i class="fa fa-fw fa-copy"></i></button>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label>SSO-only Client Login Page <small class="text-secondary">(share with clients - shows only the SSO button)</small></label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fa fa-fw fa-sign-in-alt"></i></span>
+                    <input type="text" class="form-control" value="<?= escapeHtml($oidc_sso_login_url) ?>" readonly>
+                    <button type="button" class="btn btn-default clipboardjs" data-clipboard-text="<?= escapeHtml($oidc_sso_login_url) ?>"><i class="fa fa-fw fa-copy"></i></button>
                 </div>
             </div>
 

@@ -18,6 +18,12 @@ require_once "../includes/inc_set_timezone.php";
 $session_ip = escapeSql(getIP());
 $session_user_agent = escapeSql($_SERVER['HTTP_USER_AGENT'] ?? '');
 
+// Remember which login page started this attempt (login_sso.php passes
+// from=sso) so a failure lands the user back on the page they came from
+if (!isset($_GET['code']) && !isset($_GET['error'])) {
+    $_SESSION['oidc_login_from'] = ($_GET['from'] ?? '') === 'sso' ? 'sso' : 'login';
+}
+
 // Sends the user back to the login page with a message. $log_detail goes to
 // the app log only - it can name the misconfiguration, the user never sees it.
 function oidcLoginFail($user_message, $log_detail = null) {
@@ -25,7 +31,7 @@ function oidcLoginFail($user_message, $log_detail = null) {
         error_log("ITFlow: client portal OIDC login failed: $log_detail");
     }
     $_SESSION['login_message'] = "Something went wrong with logging you in: $user_message";
-    header("Location: ../login.php");
+    header("Location: " . (($_SESSION['oidc_login_from'] ?? '') === 'sso' ? "login_sso.php" : "../login.php"));
     exit();
 }
 
@@ -167,6 +173,7 @@ if (isset($_GET['code']) || isset($_GET['error'])) {
     $_SESSION['contact_id'] = $contact_id;
     $_SESSION['csrf_token'] = randomString(32);
     $_SESSION['login_method'] = "oidc";
+    unset($_SESSION['oidc_login_from']);
 
     logAudit("Client Login", "Success", "Client contact $email_sql successfully logged in via OIDC ($provider_name_sql)", $client_id, $user_id);
 
@@ -176,5 +183,5 @@ if (isset($_GET['code']) || isset($_GET['error'])) {
 }
 
 // If the user is just sat on the page, send them back to log in to try again
-header("Location: ../login.php");
+header("Location: " . (($_SESSION['oidc_login_from'] ?? '') === 'sso' ? "login_sso.php" : "../login.php"));
 exit();

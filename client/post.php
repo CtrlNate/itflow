@@ -618,13 +618,16 @@ if (isset($_GET['export_statement_pdf'])) {
 
 if (isset($_GET['logout'])) {
 
+    // SSO contacts go back to the SSO-only login page, not the password form
+    $logout_to_sso = ($_SESSION['login_method'] ?? '') === 'oidc';
+
     setcookie("PHPSESSID", '', time() - 3600, "/");
     unset($_COOKIE['PHPSESSID']);
 
     session_unset();
     session_destroy();
 
-    redirect('/login.php');
+    redirect($logout_to_sso ? '/client/login_sso.php' : '/login.php');
 
 }
 
