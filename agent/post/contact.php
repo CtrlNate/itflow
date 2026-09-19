@@ -191,6 +191,8 @@ if (isset($_POST['edit_contact'])) {
 
         if ($auth_method == 'azure') {
             $password_info = "Login with your Microsoft (Azure AD) account.";
+        } elseif ($auth_method == 'oidc') {
+            $password_info = escapeSql("Use the \"Login with " . escapeHtml(oidcDisplayName()) . "\" button on the login page.");
         } elseif (empty($_POST['contact_password'])) {
             $password_info = "Request a password reset at https://$config_base_url/client/login_reset.php";
         } else {

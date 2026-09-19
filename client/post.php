@@ -663,7 +663,7 @@ if (isset($_POST['add_contact'])) {
     $contact_email = escapeSql($_POST['contact_email']);
     $contact_technical = intval($_POST['contact_technical'] ?? 0);
     $contact_billing = intval($_POST['contact_billing'] ?? 0);
-    $contact_auth_method = escapeSql($_POST['contact_auth_method']);
+    $contact_auth_method = in_array($_POST['contact_auth_method'] ?? '', ['local', 'azure', 'oidc'], true) ? $_POST['contact_auth_method'] : '';
 
     // Check the email isn't already in use
     $sql = mysqli_query($mysqli, "SELECT user_id FROM users WHERE user_email = '$contact_email'");
@@ -716,7 +716,7 @@ if (isset($_POST['edit_contact'])) {
     $contact_email = escapeSql($_POST['contact_email']);
     $contact_technical = intval($_POST['contact_technical'] ?? 0);
     $contact_billing = intval($_POST['contact_billing'] ?? 0);
-    $contact_auth_method = escapeSql($_POST['contact_auth_method']);
+    $contact_auth_method = in_array($_POST['contact_auth_method'] ?? '', ['local', 'azure', 'oidc'], true) ? $_POST['contact_auth_method'] : '';
 
     // Get the existing contact_user_id - we look it up ourselves so the user can't just overwrite random users
     $sql = mysqli_query($mysqli,"SELECT contact_user_id FROM contacts WHERE contact_id = $contact_id AND contact_client_id = $session_client_id");
