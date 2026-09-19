@@ -139,6 +139,9 @@ $resource_module = [
     'technicians'   => 'module_support',
     'clients'       => 'module_client',
     'contacts'      => 'module_client',
+    // App access feed for the identity provider - reads client and contact tags
+    'entitlements'      => 'module_client',
+    'entitlement_apps'  => 'module_client',
     'locations'     => 'module_client',
     'vendors'       => 'module_client',
     'invoices'      => 'module_sales',
