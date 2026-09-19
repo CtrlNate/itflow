@@ -217,6 +217,9 @@ ob_start();
                                     <option value="">- No Access -</option>
                                     <option value="local" <?php if ($auth_method == "local") { echo "selected"; } ?>>Using Set Password</option>
                                     <option value="azure" <?php if ($auth_method == "azure") { echo "selected"; } ?>>Using Azure Credentials</option>
+                                    <?php if (oidcIsConfigured() || $auth_method == "oidc") { ?>
+                                        <option value="oidc" <?php if ($auth_method == "oidc") { echo "selected"; } ?>>Using <?= escapeHtml(oidcDisplayName()) ?> (OpenID Connect)</option>
+                                    <?php } ?>
                                 </select>
                             </div>
                         </div>

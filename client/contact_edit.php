@@ -103,6 +103,9 @@ if ($row) {
                         <?php if (!empty($config_azure_client_id)) { ?>
                             <option value="azure" <?php if ($contact_auth_method == "azure") { echo "selected"; } ?>>Azure (Microsoft 365)</option>
                         <?php } ?>
+                        <?php if (oidcIsConfigured() || $contact_auth_method == "oidc") { ?>
+                            <option value="oidc" <?php if ($contact_auth_method == "oidc") { echo "selected"; } ?>><?= escapeHtml(oidcDisplayName()) ?> (Single Sign-On)</option>
+                        <?php } ?>
                     </select>
                 </div>
             </div>

@@ -103,6 +103,9 @@ $config_login_key_secret   = $row['config_login_key_secret'];
 
 $azure_client_id = $row['config_azure_client_id'] ?? null;
 
+$oidc_settings = oidcGetSettings();
+$oidc_enabled = oidcIsConfigured($oidc_settings);
+
 $response         = null;
 $token_field      = null;
 $show_role_choice = false;
@@ -797,6 +800,11 @@ $show_login_form = (!$show_role_choice && !$show_mfa_form);
                         <a href="client/login_microsoft.php">
                             <button type="button" class="btn btn-secondary">Login with Microsoft Entra</button>
                         </a>
+                    </div>
+                <?php } ?>
+                <?php if ($oidc_enabled) { ?>
+                    <div class="col text-center mt-2">
+                        <a href="client/login_oidc.php" class="btn btn-secondary">Login with <?= escapeHtml(oidcDisplayName($oidc_settings)) ?></a>
                     </div>
                 <?php } ?>
             <?php } ?>

@@ -209,6 +209,9 @@ ob_start();
                                     <option value="">- No Access -</option>
                                     <option value="local">Using Set Password</option>
                                     <option value="azure">Using Azure Credentials</option>
+                                    <?php if (oidcIsConfigured()) { ?>
+                                        <option value="oidc">Using <?= escapeHtml(oidcDisplayName()) ?> (OpenID Connect)</option>
+                                    <?php } ?>
                                 </select>
                             </div>
                         </div>

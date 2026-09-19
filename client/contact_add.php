@@ -72,6 +72,9 @@ enforceContactCan('contacts');
                         <?php if (!empty($config_azure_client_id)) { ?>
                             <option value="azure">Azure (Microsoft 365)</option>
                         <?php } ?>
+                        <?php if (oidcIsConfigured()) { ?>
+                            <option value="oidc"><?= escapeHtml(oidcDisplayName()) ?> (Single Sign-On)</option>
+                        <?php } ?>
                     </select>
                 </div>
             </div>

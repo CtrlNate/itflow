@@ -7,8 +7,10 @@
 
 require_once __DIR__ . "/../../includes/session_init.php";
 
+// Not signed in (or the session expired). With OIDC SSO set up, clients go to
+// the SSO-only page rather than the unified password login.
 if (!isset($_SESSION['client_logged_in']) || !$_SESSION['client_logged_in']) {
-    redirect("/login.php");
+    redirect(oidcIsConfigured() ? "/client/login_sso.php" : "/login.php");
 }
 
 // Set Timezone

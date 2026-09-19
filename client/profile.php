@@ -94,6 +94,8 @@ if ($login_method === 'local') {
     $login_method_display = 'Password';
 } elseif ($login_method === 'azure') {
     $login_method_display = 'Microsoft account';
+} elseif ($login_method === 'oidc') {
+    $login_method_display = escapeHtml(oidcDisplayName());
 } else {
     $login_method_display = escapeHtml(ucfirst($login_method));
 }
